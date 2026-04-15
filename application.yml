@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ingredient_db
+    username: postgres
+    password: password
+
+  jdbc:
+    initialize-schema: always

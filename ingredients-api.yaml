@@ -1,0 +1,85 @@
+openapi: 3.0.0
+info:
+  title: Gestion des Ingrédients API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /ingredients/{id}:
+    get:
+      summary: Récupérer un ingrédient par ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  identifiant:
+                    type: string
+                  nom:
+                    type: string
+                  categorie:
+                    type: string
+                  prix:
+                    type: number
+        '404':
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Ingredient.id=123 is not found"
+  /ingredients/{id}/stock:
+    get:
+      summary: Récupérer le stock
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: at
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: unit
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [PCS, KG, L]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  unite:
+                    type: string
+                  valeur:
+                    type: number
+        '400':
+          description: Missing parameter
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Either mandatory query parameter 'at' or 'unit' is not provided."
+        '404':
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Ingredient.id=123 is not found"
